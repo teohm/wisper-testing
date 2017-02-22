@@ -12,7 +12,7 @@ module Wisper
     def self.fake!
       store_original_broadcasters
       Wisper.configuration.broadcasters.keys.each do |key, broadcaster|
-        Wisper.configuration.broadcasters[key] = FakeBroadcaster.new
+        Wisper.configuration.broadcasters[key] = FakeBroadcaster.new(events)
       end
       is_enabled
       self
@@ -81,6 +81,10 @@ module Wisper
     end
 
     private
+
+    def self.events
+      @events ||= []
+    end
 
     def self.is_enabled
       @enabled = true
